@@ -1,5 +1,5 @@
 // @ts-nocheck
-import express from "express";
+import express, { type Request, type Response } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -10,7 +10,7 @@ const staticPath = path.resolve(__dirname, "..", "dist", "public");
 
 app.use(express.static(staticPath));
 
-app.get("*", (req, res) => {
+app.get("*", (_req: Request, res: Response) => {
   res.sendFile(path.join(staticPath, "index.html"));
 });
 
