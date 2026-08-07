@@ -9,8 +9,8 @@ var staticPath = path.resolve(__dirname, "..", "dist", "public");
 
 app.use(express.static(staticPath));
 
-app.get("*", (_req: Request, res: Response) => {
-  res.sendFile(path.join(staticPath, "index.html"));
+app.get("*", (_req: Request, res: Response<any, Record<string, any>>) => {
+  (res as any).sendFile(path.join(staticPath, "index.html"));
 });
 
 var index_default = app;
