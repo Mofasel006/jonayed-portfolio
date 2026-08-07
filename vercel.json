@@ -12,5 +12,5 @@
       "dest": "server/index.ts"
     }
   ],
-  "installCommand": "pnpm install --no-frozen-lockfile"
+  "installCommand": "npm install --legacy-peer-deps"
 }
