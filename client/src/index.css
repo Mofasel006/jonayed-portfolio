@@ -1,0 +1,317 @@
+/*
+ * BLUEPRINT ATELIER — Design System
+ * Cinematic industrial-luxury: matte black canvas, cyber gold signature, neon cyan telemetry.
+ * Display: Archivo (800/900) | Body: Inter Tight | HUD: JetBrains Mono
+ * Motion: ease-out, structural, never bouncy. Glow over shadow.
+ */
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  /* Brand tokens */
+  --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
+  --color-cyan-glow: var(--cyan-glow);
+  --color-ink: var(--ink);
+  --color-charcoal: var(--charcoal);
+  --color-concrete: var(--concrete);
+  --font-display: "Archivo", sans-serif;
+  --font-body: "Inter Tight", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+:root,
+.dark {
+  --radius: 0.25rem;
+  /* Matte black canvas */
+  --background: oklch(0.155 0.005 280);
+  --foreground: oklch(0.88 0.008 260);
+  --card: oklch(0.195 0.007 280);
+  --card-foreground: oklch(0.88 0.008 260);
+  --popover: oklch(0.195 0.007 280);
+  --popover-foreground: oklch(0.88 0.008 260);
+  /* Cyber gold — signature */
+  --primary: oklch(0.77 0.12 88);
+  --primary-foreground: oklch(0.13 0.02 88);
+  --secondary: oklch(0.24 0.01 280);
+  --secondary-foreground: oklch(0.8 0.02 195);
+  --muted: oklch(0.24 0.008 280);
+  --muted-foreground: oklch(0.64 0.01 270);
+  /* Neon cyan — telemetry */
+  --accent: oklch(0.77 0.13 210);
+  --accent-foreground: oklch(0.13 0.03 210);
+  --destructive: oklch(0.6 0.2 25);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 13%);
+  --ring: oklch(0.77 0.12 88);
+  --chart-1: oklch(0.77 0.12 88);
+  --chart-2: oklch(0.77 0.13 210);
+  --chart-3: oklch(0.64 0.01 270);
+  --chart-4: oklch(0.45 0.01 280);
+  --chart-5: oklch(0.3 0.01 280);
+  --sidebar: oklch(0.195 0.007 280);
+  --sidebar-foreground: oklch(0.88 0.008 260);
+  --sidebar-primary: oklch(0.77 0.12 88);
+  --sidebar-primary-foreground: oklch(0.13 0.02 88);
+  --sidebar-accent: oklch(0.24 0.01 280);
+  --sidebar-accent-foreground: oklch(0.88 0.008 260);
+  --sidebar-border: oklch(1 0 0 / 9%);
+  --sidebar-ring: oklch(0.77 0.12 88);
+
+  /* Brand color values for custom CSS */
+  --gold: #d4af37;
+  --gold-bright: #f5c542;
+  --cyan-glow: #22d3ee;
+  --ink: #0a0a0c;
+  --charcoal: #16161a;
+  --concrete: #8a8a93;
+
+  --ease-out-snappy: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-struct: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  /*
+   * Blueprint Atelier — force R3F canvases to fill their absolutely-positioned
+   * wrappers. The Lenis smooth-scroll wrapper clones the DOM at mount time,
+   * which can strip inline sizing on the WebGL canvas; explicit width/height
+   * + absolute positioning guarantees the drawing buffer is never 300×150.
+   */
+  .scene-canvas {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+  }
+  .scene-canvas canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    background-color: var(--ink);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+  ::selection {
+    background: rgba(212, 175, 55, 0.35);
+    color: #f8f5ee;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+}
+
+/* ============================================================
+   BLUEPRINT ATELIER — signature utilities
+   ============================================================ */
+
+/* faint blueprint grid overlay */
+.blueprint-grid {
+  background-image:
+    linear-gradient(rgba(212, 175, 55, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.045) 1px, transparent 1px),
+    linear-gradient(rgba(212, 175, 55, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px;
+}
+
+/* HUD monospace label */
+.hud-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--concrete);
+}
+
+.hud-chip {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: var(--gold-bright);
+  padding: 0.35rem 0.75rem;
+  background: rgba(212, 175, 55, 0.05);
+  transition: border-color 200ms var(--ease-out-snappy), box-shadow 200ms var(--ease-out-snappy);
+}
+
+.hud-chip:hover {
+  border-color: rgba(212, 175, 55, 0.8);
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.18);
+}
+
+/* display headline */
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+/* magnetic button */
+.magnetic-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: var(--gold-bright);
+  background: rgba(212, 175, 55, 0.06);
+  transition:
+    background 220ms var(--ease-out-snappy),
+    color 220ms var(--ease-out-snappy),
+    box-shadow 220ms var(--ease-out-snappy),
+    transform 160ms var(--ease-out-snappy);
+  will-change: transform;
+}
+
+.magnetic-btn:hover {
+  background: rgba(212, 175, 55, 0.14);
+  box-shadow: 0 0 32px rgba(212, 175, 55, 0.22), inset 0 0 24px rgba(212, 175, 55, 0.08);
+}
+
+.magnetic-btn:active {
+  transform: scale(0.97);
+}
+
+/* neon submit animation — ring sweep around border */
+@keyframes border-sweep {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* subtle film grain */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0c;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain::after {
+    display: none;
+  }
+}
